@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "name": "shirt",
+        "categoryId": 2
+    },
+    {
+        "id": 2,
+        "name": "pants",
+        "categoryId": 2
+    },
+    {
+        "id": 3,
+        "name": "bowl",
+        "categoryId": 3
+    },
+    {
+        "id": 5,
+        "name": "cucumber",
+        "categoryId": 5
+    },
+    {
+        "id": 121,
+        "name": "skart",
+        "categoryId": 2
+    },
+    {
+        "id": 121,
+        "name": "skart",
+        "categoryId": 2
+    },
+    {
+        "id": 558,
+        "name": "ford",
+        "categoryId": 3333
+    },
+    {
+        "id": 225,
+        "name": "toyota----",
+        "categoryId": 3333
+    }
+]

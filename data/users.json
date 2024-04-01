@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "username": "MC9875",
+        "name": "moshe",
+        "phone": "053-3685485",
+        "address": "rabi akiva 68",
+        "email": "m0533685485@gmail.com",
+        "password": "4m255nh#hgf"
+    },
+    {
+        "id": 2,
+        "username": "bbbbBBBB2020",
+        "name": "Efrat",
+        "phone": "053-3196821",
+        "address": "הריטבא 5",
+        "email": "e0533196821@gmail.com",
+        "password": "452020VVVbvgb"
+    },
+    {
+        "id": 2,
+        "username": "bbbbBBBB2020",
+        "name": "Efrat",
+        "phone": "053-3196821",
+        "address": "הריטבא 5",
+        "email": "e0533196821@gmail.com",
+        "password": "452020VVVbvgb"
+    },
+    {
+        "username": "lll22",
+        "password": "sads123"
+    },
+    {
+        "id": 5,
+        "username": "i00pkj2",
+        "name": "sara",
+        "phone": "052-7682455",
+        "address": "חפץ חיים",
+        "email": "saragrinn147@gmail.com",
+        "password": "sarygrin12"
+    }
+]
