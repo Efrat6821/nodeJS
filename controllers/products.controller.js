@@ -8,99 +8,87 @@ const fsPromises = require('fs').promises;
 const productsClass = require('../classes/products.js');
 const { Category, Product } = require('../conectionToDB/db.js');
 const { ObjectId } = require('mongodb');
+const productSrvice = require('../services/productsSrvice.js');
+
 
 router.get('/', async (req, res) => {
-    try {
-        const products = await Product.find();
-        log(products);
-        res.send(products);
-    }
-    catch (err) {
-        console.error(err);
-    }
+  try {
+    const products = await productSrvice.GetAllProduct();
+    console.log(products);
+    res.send(products);
+  }
+  catch (err) {
+    console.error(err);
+  }
 });
 
 
 router.get('/:categoryId', async (req, res) => {
-    try {
-        const products = await Product.find();
-        const category = parseInt(req.params.categoryId);
-        const productByCategory = products.filter(p => p.categoryId === category);
-        if (productByCategory[0] === undefined) {
-            res.status(404).send('there are no products in the requested category!')
-        }
-        else {
-            const sortProducts = productByCategory.toSorted((a, b) => {
-                return a.name.localeCompare(b.name);
-            });
-            res.status(200).send(sortProducts)
-        }
-    }
-    catch (err) {
-        console.error(err);
-    }
+  try {
+    const category = parseInt(req.params.categoryId);
+    const prodctsById = await productSrvice.GetAllProductByCategoryId(category);
+    if (prodctsById === "category not found")
+      res.status(404).send('there are no products in the requested category!');
+    res.status(200).send(prodctsById);
+  }
+  catch (err) {
+    console.error(err);
+  }
 });
 router.get('/:categoryId/:productId', async (req, res) => {
-    try {
-        const products = await Product.find();
-        const category = parseInt(req.params.categoryId);
-        const Idproduct = parseInt(req.params.productId);
-        const productById = products.find(p => p.categoryId === category && p.id === Idproduct);
-        if (productById) {
-            res.status(200).send(productById)
-        }
-        else {
-            res.status(404).send('there are no products in the requested category or id product')
-        }
-    }
-    catch (err) {
-        console.error(err);
-    }
+  try {
+    const categoryId = parseInt(req.params.categoryId);
+    const productId = parseInt(req.params.productId);
+    const productById = await productSrvice.GetProductByCategoryIdAndProductId(categoryId, productId);
+    if (productById === "product not found")
+      res.status(404).send('there are no products in the requested category or id product');
+    res.status(200).send(productById);
+  }
+  catch (err) {
+    console.error(err);
+  }
 });
 
 
 router.put('/:id', async (req, res) => {
-    try {
-        const idProduct = new ObjectId(req.params.id);
-        const newData = req.body;
-        const updatedProduct = await Product.findByIdAndUpdate(idProduct, newData, { new: true });
-        if (!updatedProduct) {
-            return res.status(404).send('product not found');
-        }
-        res.send('The product has been updated successfully');
+  try {
+    const productId = new ObjectId(req.params.id);
+    const newData = req.body;
+    const updatedProduct = await productSrvice.UpdateProduct(productId, newData);
+    if (updatedProduct === "not found") {
+      return res.status(404).send('product not found');
     }
-    catch (err) {
-        console.error(err);
-    }
-
+    res.send('The product has been updated successfully');
+  }
+  catch (err) {
+    console.error(err);
+  }
 });
 
 router.post('/', async (req, res) => {
-    try {
-        const data = req.body;
-        const newProduct = new Product(data);
-        await newProduct.save();
-        res.send('the new product has been successfully added');
-    }
-    catch (err) {
-        console.error(err);
-    }
+  try {
+    const data = req.body;
+    await productSrvice.CreateProduct(data);
+    res.send('the new product has been successfully added');
+  }
+  catch (err) {
+    console.error(err);
+  }
 });
 
 
 router.delete('/:id', async (req, res) => {
-    try {
-        const idProduct = new ObjectId(req.params.id);
-        const deletedProduct = await Product.findByIdAndDelete(idProduct);
-        if (!deletedProduct) {
-            return res.status(404).send('product not found');
-        }
-        res.send('The product has been deleted successfully');
+  try {
+    const productId = new ObjectId(req.params.id);
+    const deletedProduct = await productSrvice.DeleteProduct(productId);
+    if (deletedProduct === "not found") {
+      return res.status(404).send('product not found');
     }
-    catch (err) {
-        console.error(err);
-    }
-
+    res.send('The product has been deleted successfully');
+  }
+  catch (err) {
+    console.error(err);
+  }
 });
 
 module.exports = router;
